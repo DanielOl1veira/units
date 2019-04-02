@@ -1,57 +1,24 @@
 package pt.ipp.isep.dei.project.services.units;
 
+import java.io.*;
+
+import static pt.ipp.isep.dei.project.services.units.UnitHelper.defaultSetter;
+
 public class Adapter {
 
     private String userDefault;
-    private String applicationDefault;
 
-    public String getApplicationDefault(){
-        this.applicationDefault = properties.getApplicationDefault();
-        return this.applicationDefault;
+    private void getUserDefault() throws IOException{
+        this.userDefault = defaultSetter();
     }
 
-    public String getUserDefault(){
-        this.userDefault = properties.getUserDefault();
-        return this.userDefault;
+    public double convertToSystemDefault(double valueToConvert, Unit unitToConvert) {
+        return UnitHelper.convertToSystemDefault(valueToConvert,unitToConvert);
     }
 
-    public double convertToSystemDefault(double valueToConvert, Unit unitToConvert){
-        getApplicationDefault();
-        try {
-            TemperatureUnit specificUnit = (TemperatureUnit) unitToConvert;
-            return specificUnit.toDefault(applicationDefault, valueToConvert);
-        }
-        catch (ClassCastException ok){
-            ok.printStackTrace();
-        }
-        try {
-            RainfallUnit specificUnit = (RainfallUnit) unitToConvert;
-            return specificUnit.toDefault(applicationDefault, valueToConvert);
-        }
-        catch (ClassCastException ok){
-            ok.printStackTrace();
-        }
-        return valueToConvert;
-    }
-
-    public double convertToDisplayDefault(double valueToConvert, Unit unitToConvert){
+    public double convertToUserDefault(double valueToConvert, Unit unitToConvert) throws IOException {
         getUserDefault();
-        try {
-            TemperatureUnit specificUnit = (TemperatureUnit) unitToConvert;
-            return specificUnit.toDefault(userDefault, valueToConvert);
-        }
-        catch (ClassCastException ok){
-            ok.printStackTrace();
-        }
-        try {
-            RainfallUnit specificUnit = (RainfallUnit) unitToConvert;
-            return specificUnit.toDefault(userDefault, valueToConvert);
-        }
-        catch (ClassCastException ok){
-            ok.printStackTrace();
-        }
-        return valueToConvert;
+        return UnitHelper.convertToSystemDefault(valueToConvert,unitToConvert);
     }
-
 
 }

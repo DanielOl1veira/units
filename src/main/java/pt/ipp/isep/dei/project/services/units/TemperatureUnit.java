@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.project.services.units;
 
+import java.io.IOException;
+
 /**
  * Represents all temperature units.
  * Provides methods to transmute between units.
@@ -7,7 +9,7 @@ package pt.ipp.isep.dei.project.services.units;
 
 public interface TemperatureUnit extends Unit {
 
-    double toDefault(String defaultUnit, double valueToConvert);
+    double toDefault(double valueToConvert) throws IOException;
 
     /**
      * Method to convert temperature values to kelvin

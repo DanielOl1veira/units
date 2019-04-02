@@ -1,16 +1,24 @@
 package pt.ipp.isep.dei.project.services.units;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+import static pt.ipp.isep.dei.project.services.units.UnitHelper.toDefaultUnit;
+
 public class Kelvin implements TemperatureUnit {
 
 
-    public double toDefault(String defaultUnit, double valueToConvert) {
-        if (defaultUnit.equals("Celsius")){
-            return this.toCelsius(valueToConvert);
+    public double toDefault(double valueToConvert) throws IOException {
+        String defaultUnit;
+        Properties prop = new Properties();
+        try (FileInputStream input = new FileInputStream("resources/units.properties")){
+            prop.load(input);
+            defaultUnit = prop.getProperty("defaultDisplayTemperatureUnit");
+        } catch (IOException ioe) {
+                throw new IOException("ERROR: Unable to process configuration file.");
         }
-        else if (defaultUnit.equals("Fahrenheit")){
-            return this.toFahrenheit(valueToConvert);
-        }
-        return this.toKelvin(valueToConvert);
+        return toDefaultUnit(defaultUnit, valueToConvert, this);
     }
 
     public double toKelvin(double temperature) {
@@ -25,4 +33,7 @@ public class Kelvin implements TemperatureUnit {
         return temperature -273.15;
     }
 
+    public String buildString() {
+        return "Kelvin";
+    }
 }
