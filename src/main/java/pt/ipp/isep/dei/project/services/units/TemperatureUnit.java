@@ -5,7 +5,9 @@ package pt.ipp.isep.dei.project.services.units;
  * Provides methods to transmute between units.
  */
 
-public interface TemperatureUnit {
+public interface TemperatureUnit extends Unit {
+
+    double toDefault(String defaultUnit, double valueToConvert);
 
     /**
      * Method to convert temperature values to kelvin

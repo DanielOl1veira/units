@@ -15,4 +15,11 @@ public class Fahrenheit implements TemperatureUnit {
         return (temperature - 32) * 5 / 9;
     }
 
+    public Unit convertToApplicationDefault(Unit u) {
+        return null;
+    }
+
+    public Unit convertToDisplayDefault(Unit u) {
+        return null;
+    }
 }
